@@ -2,7 +2,7 @@ package auth.model;
 
 import java.time.LocalDateTime;
 
-public class OptSession {
+public class OtpSession {
     // Opt Session Id
     private Integer id ;
 
@@ -21,7 +21,7 @@ public class OptSession {
     // Mapping to user
     private Integer userId ;
 
-    public OptSession(Integer userId) {
+    public OtpSession(Integer userId) {
         this.userId = userId;
     }
 

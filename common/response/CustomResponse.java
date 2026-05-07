@@ -11,6 +11,10 @@ public class CustomResponse<T> {
         this.data = data;
     }
 
+    public CustomResponse() {
+
+    }
+
     public boolean isSuccess() {
         return success;
     }

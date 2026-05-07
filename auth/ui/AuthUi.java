@@ -78,6 +78,9 @@ public class AuthUi {
 
     }
 
+    /**
+     *
+     */
     private void verifyOtpAndLogin() {
 
             // Create an object of Opt verification object
@@ -107,46 +110,34 @@ public class AuthUi {
                    updateSecurityContext(responseDto);
                 }catch (ServerError serverError){
                     // Logger the error info
-                    logger.info("Unexpected Server error :");
-                    logger.info("Try After some time .... Exiting");
+                    logger.info("Unexpected Server error : Try After some time .... Exiting ");
+
                     // End the program
                     System.exit(0);
-                }// if wrong renter the opt if time sent was more than 30 sec or Resent the phone number to controller
-                catch (InvalidOtp invalidOtp){
+                } catch (InvalidOtp invalidOtp){
+                    // if wrong renter the opt if time sent was more than 30 sec or Resent the phone number to controller
                     if(invalidOtp.isOtpMisMatch()){
                         // enter opt again
                         logger.info("Otp not matching ....");
                         logger.info("Enter the OTP : ");
                         requestDto.setOpt(scanner.nextLine());
-                    }else {
+                        continue;
+                    }
 
 
-                        // it means times Up hence resend  opt
-                        logger.info("OTP is expired Resend the opt :  ");
-                        logger.info("Enter any choice : \n 1) Resend OTP : \n 2) Exit.. ");
+                    // it means times Up hence resend  opt
+                    logger.info("OTP is expired Resend the opt :  ");
+                    logger.info("Enter any choice : \n 1) Resend OTP : \n 2) Exit.. ");
 
-                        // Get the user choice
-                        int choice = scanner.nextInt();
-                        scanner.nextLine();
-                        if(choice==1){
-                            // Resend the otp
-                            CustomResponse<String> result =   authController.reSendOtp(sessionId);
-                            if(result.isSuccess()){
-                                sessionId =  result.getData();
-                                // Set the session id
-                                requestDto.setSessionId(sessionId);
-                            }else {
-                                // Due to server error
-                                throw new ServerError("Unaccepted server Error");
-                            }
-                            logger.info("Enter the OTP : ");
-                            requestDto.setOpt(scanner.nextLine());
-                        }else {
-                            throw new UserInterrupt("Operation aborted based on user request");
-                        }
-
-
-
+                    // Get the user choice
+                    int choice = scanner.nextInt();
+                    scanner.nextLine();
+                    if (choice == 1) {
+                        reSendOtp();
+                        // Set the session id
+                        requestDto.setSessionId(sessionId);
+                    } else {
+                        throw new UserInterrupt("Operation aborted based on user request");
                     }
                 }
 
@@ -166,6 +157,18 @@ public class AuthUi {
 
     }
 
+    public void reSendOtp(){
+        // Resend the otp
+        CustomResponse<String> result =   authController.reSendOtp(sessionId);
+        if(result.isSuccess()){
+            sessionId =  result.getData();
+
+        }else {
+            // Due to server error
+            throw new ServerError("Unaccepted server Error");
+        }
+
+    }
     public void login() {
 
         AuthUi authUi = new AuthUi();
