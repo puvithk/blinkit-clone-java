@@ -5,13 +5,14 @@ import auth.dao.impl.InMemoryOtpSessionDao;
 import auth.dto.AuthResponseDto;
 import auth.dto.OtpRequestDto;
 import auth.dto.OtpVerificationRequestDto;
+
+import auth.exceptions.InvalidOtp;
 import auth.exceptions.InvalidPhoneNumber;
 import auth.exceptions.OtpSessionAlreadyPresent;
 import auth.model.OtpSession;
 import common.exception.ServerError;
 import common.response.CustomResponse;
-import user.dao.InMemoryUserDaoImpl;
-import user.dao.UserDao;
+
 import user.exceptions.UserNotFound;
 import user.model.User;
 import user.service.UserService;
@@ -28,8 +29,13 @@ public class AuthService {
     private final Random rad = new Random();
 
     public CustomResponse<String> sendOpt(OtpRequestDto loginRequest) {
+
+        // Check weather the phone number is valid
+        if(!loginRequest.getPhone().matches("^\\+91[6-9]\\d{9}$")){
+            throw new InvalidPhoneNumber("Invalid Phone Number ");
+        }
         // Check weather the user with phone number is present
-        User user = null;
+        User user ;
         // If present Create a Otp Session and send the session id
         // if not present create a users and send the session id
         try{
@@ -56,7 +62,7 @@ public class AuthService {
                 excecutionCount++;
             }
         }
-        System.out.println(otpSession.getOpt());
+
         return new CustomResponse<>(true , "Sent Otp successfully" , otpSession.getSessionId());
     }
 
@@ -74,16 +80,58 @@ public class AuthService {
 
     private String createSessionId(String phoneNumber) {
         // Return a session id based on the phone number date and a random number
-        return phoneNumber + LocalDateTime.now() + rad.nextInt(9999);
+        return phoneNumber.substring(3) + LocalDateTime.now() + rad.nextInt(9999);
 
     }
 
 
     public CustomResponse<AuthResponseDto> verifyOtp(OtpVerificationRequestDto requestDto) {
-        return null;
+        // Get the session Id
+        String currentSessionId = requestDto.getSessionId();
+        // Get the otp session based on the session id
+        OtpSession currentOtpSession = otpSessionDao.findBySessionId(currentSessionId);
+        // Check weather the opt is expired
+        boolean isOtpExpired = currentOtpSession.getExpireBy().isBefore(LocalDateTime.now());
+
+
+        if (isOtpExpired) {
+            throw new InvalidOtp("OTP expired", false);
+        }
+        // Check weather the otp matchs
+        boolean isOtpCorrect =
+                currentOtpSession.getOpt().equals(requestDto.getOpt());
+
+        if (!isOtpCorrect) {
+            throw new InvalidOtp("Invalid OTP", true);
+        }
+        // Updated the verified
+        currentOtpSession.setVerified(true);
+        // update the database
+        otpSessionDao.updateOtpVerification(currentOtpSession);
+        // Get the users
+        User user = userService.getUserByUserId(currentOtpSession.getUserId());
+        // Updated the authresponse
+        AuthResponseDto authResponseDto = new AuthResponseDto();
+
+        authResponseDto.setUserId(currentOtpSession.getUserId());
+        // Check weather the profileIs completed or not
+        if (user.getUsername() == null) {
+            authResponseDto.setProfileCompleted(false);
+        } else {
+            authResponseDto.setUsername(user.getUsername());
+            authResponseDto.setProfileCompleted(true);
+        }
+
+        return new CustomResponse<>(
+                true,
+                "OTP verified successfully",
+                authResponseDto
+        );
     }
 
     public CustomResponse<String> reSendOtp(String sessionId) {
-    return  null;
+
+        return  null;
+
     }
 }

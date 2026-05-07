@@ -30,4 +30,12 @@ public class InMemoryUserDaoImpl implements UserDao {
         user.setId(userId);
         users.addLast(user);
     }
+
+    @Override
+    public User findUserByUserId(Integer userId) {
+        return users.stream()
+                .filter(user -> user.getId()== userId)
+                .findFirst()
+                .orElse(null);
+    }
 }

@@ -35,4 +35,22 @@ public class InMemoryOtpSessionDao implements OtpSessionDao {
                 && otpSession.getOpt().equals(opt)
         ).findFirst().orElse(null);
     }
+
+    @Override
+    public OtpSession findBySessionId(String currentSessionId) {
+        return otpSessions.stream().filter(
+                session -> session.getSessionId().equals(currentSessionId)
+        ).findFirst().orElse(null);
+    }
+
+    @Override
+    public void updateOtpVerification(OtpSession currentOtpSession) {
+        // Update the isVerified entity
+
+        currentOtpSession.setVerified(!currentOtpSession.isVerified());
+        int index = otpSessions.indexOf(currentOtpSession);
+        currentOtpSession.setVerified(!currentOtpSession.isVerified());
+        otpSessions.set(index , currentOtpSession);
+
+    }
 }

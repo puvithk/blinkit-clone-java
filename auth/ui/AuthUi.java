@@ -42,11 +42,12 @@ public class AuthUi {
                 CustomResponse<String> result =   authController.sendOtp(otpRequestDto);
                 if(result.isSuccess()){
                     sessionId =  result.getData();
+                    break;
                 }else {
                     // Due to server error
                     throw new ServerError("Unaccepted server Error");
                 }
-                break;
+
             }catch (InvalidPhoneNumber invalidPhoneNumber){
                 // Verify if the Phone number i valid
                 logger.info("Invalid Phone number ");
@@ -78,9 +79,7 @@ public class AuthUi {
 
     }
 
-    /**
-     *
-     */
+
     private void verifyOtpAndLogin() {
 
             // Create an object of Opt verification object
@@ -91,7 +90,7 @@ public class AuthUi {
             // otp Will be entered
             logger.info("Enter the OTP : ");
             requestDto.setOpt(scanner.nextLine());
-
+            requestDto.setSessionId(sessionId);
             while(true){
                 try{
                     // send session id and otp
@@ -108,6 +107,7 @@ public class AuthUi {
                    }
                     // If success update the security context with the user data
                    updateSecurityContext(responseDto);
+                   break;
                 }catch (ServerError serverError){
                     // Logger the error info
                     logger.info("Unexpected Server error : Try After some time .... Exiting ");
@@ -154,7 +154,7 @@ public class AuthUi {
 
 
     private void completeUserProfile(AuthResponseDto authResponseDto) {
-
+        System.out.println("Comepleting user profile ");
     }
 
     public void reSendOtp(){
@@ -175,7 +175,7 @@ public class AuthUi {
 
         authUi.sendOtp();
 
-        if(sessionId == null){
+        if(authUi.sessionId == null){
             logger.info("Session id not available. Resending OTP...");
             authUi.sendOtp();
         }

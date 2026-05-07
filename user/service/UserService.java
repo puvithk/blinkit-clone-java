@@ -22,4 +22,8 @@ public class UserService {
         userDao.createUser(user);
         return user;
     }
+
+    public User getUserByUserId(Integer userId) {
+        return userDao.findUserByUserId(userId);
+    }
 }
