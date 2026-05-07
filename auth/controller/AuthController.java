@@ -21,4 +21,8 @@ public class AuthController {
         // send the session id and opt to the auth server layer
         return authService.verifyOtp(requestDto);
     }
+
+    public CustomResponse<String> reSendOtp(String sessionId) {
+        return authService.reSendOtp(sessionId);
+    }
 }

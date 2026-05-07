@@ -1,16 +1,17 @@
 package auth.dto;
 
 public class AuthResponseDto {
-    private  int UserId;
+    private  int userId;
 
     private String username;
 
+    private boolean profileCompleted;
     public int getUserId() {
-        return UserId;
+        return userId;
     }
 
     public void setUserId(int userId) {
-        UserId = userId;
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -29,5 +30,5 @@ public class AuthResponseDto {
         this.profileCompleted = profileCompleted;
     }
 
-    private boolean profileCompleted;
+
 }

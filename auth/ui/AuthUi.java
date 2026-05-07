@@ -5,6 +5,7 @@ import auth.controller.AuthController;
 import auth.dto.AuthResponseDto;
 import auth.dto.OtpRequestDto;
 import auth.dto.OtpVerificationRequestDto;
+import auth.exceptions.InvalidOtp;
 import auth.exceptions.InvalidPhoneNumber;
 
 import common.exception.ServerError;
@@ -90,27 +91,74 @@ public class AuthUi {
 
             while(true){
                 try{
+                    // send session id and otp
                    CustomResponse<AuthResponseDto> authResponseDto = authController.verifyOtp(requestDto);
+                   // Check is response is null server error
                    if(authResponseDto == null){
                        throw new ServerError("Internal server error");
                    }
-                   if(authResponseDto.getData().isProfileCompleted()){
-                       completeUserProfile(authResponseDto.getData());
+                   AuthResponseDto responseDto = authResponseDto.getData();
+                   // IF user profile is not filled
+                   if(!responseDto.isProfileCompleted()){
+                       // Update the User profile in the database
+                       completeUserProfile(responseDto);
                    }
+                    // If success update the security context with the user data
+                   updateSecurityContext(responseDto);
                 }catch (ServerError serverError){
                     // Logger the error info
                     logger.info("Unexpected Server error :");
                     logger.info("Try After some time .... Exiting");
                     // End the program
                     System.exit(0);
+                }// if wrong renter the opt if time sent was more than 30 sec or Resent the phone number to controller
+                catch (InvalidOtp invalidOtp){
+                    if(invalidOtp.isOtpMisMatch()){
+                        // enter opt again
+                        logger.info("Otp not matching ....");
+                        logger.info("Enter the OTP : ");
+                        requestDto.setOpt(scanner.nextLine());
+                    }else {
+
+
+                        // it means times Up hence resend  opt
+                        logger.info("OTP is expired Resend the opt :  ");
+                        logger.info("Enter any choice : \n 1) Resend OTP : \n 2) Exit.. ");
+
+                        // Get the user choice
+                        int choice = scanner.nextInt();
+                        scanner.nextLine();
+                        if(choice==1){
+                            // Resend the otp
+                            CustomResponse<String> result =   authController.reSendOtp(sessionId);
+                            if(result.isSuccess()){
+                                sessionId =  result.getData();
+                                // Set the session id
+                                requestDto.setSessionId(sessionId);
+                            }else {
+                                // Due to server error
+                                throw new ServerError("Unaccepted server Error");
+                            }
+                            logger.info("Enter the OTP : ");
+                            requestDto.setOpt(scanner.nextLine());
+                        }else {
+                            throw new UserInterrupt("Operation aborted based on user request");
+                        }
+
+
+
+                    }
                 }
 
             }
 
-            // send session id and otp
-            // if wrong renter the opt if time sent was more than 30 sec or Resent the phone number to controller
 
-            // If success update the security context with the user data
+
+
+
+    }
+
+    private void updateSecurityContext(AuthResponseDto responseDto) {
     }
 
 
