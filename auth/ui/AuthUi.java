@@ -11,7 +11,12 @@ import auth.exceptions.InvalidPhoneNumber;
 import common.exception.ServerError;
 import common.exception.UserInterrupt;
 import common.response.CustomResponse;
+import common.security.SecurityContext;
+import user.exceptions.UserNotFound;
+import user.model.User;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
@@ -42,6 +47,7 @@ public class AuthUi {
                 CustomResponse<String> result =   authController.sendOtp(otpRequestDto);
                 if(result.isSuccess()){
                     sessionId =  result.getData();
+                    verifyOtpAndLogin();
                     break;
                 }else {
                     // Due to server error
@@ -107,6 +113,7 @@ public class AuthUi {
                    }
                     // If success update the security context with the user data
                    updateSecurityContext(responseDto);
+                    System.out.println(SecurityContext.getContext().toString());
                    break;
                 }catch (ServerError serverError){
                     // Logger the error info
@@ -150,23 +157,46 @@ public class AuthUi {
     }
 
     private void updateSecurityContext(AuthResponseDto responseDto) {
+        authController.updateSecurityContext(responseDto);
+
     }
 
 
     private void completeUserProfile(AuthResponseDto authResponseDto) {
-        System.out.println("Comepleting user profile ");
+        User user = new User(authResponseDto.getUserId());
+        logger.info("Update the User prefile :");
+        logger.info("Enter your name :");
+        user.setUsername(scanner.nextLine());
+        logger.info("Enter your email :");
+        user.setEmail(scanner.nextLine());
+        logger.info("Enter the Dob");
+        user.setDob(LocalDate.parse(scanner.nextLine()));
+
+        // Update the database
+        authController.updateUser(user);
+        authResponseDto.setUsername(user.getUsername());
+        authResponseDto.setUserId(user.getId());
     }
 
     public void reSendOtp(){
         // Resend the otp
-        CustomResponse<String> result =   authController.reSendOtp(sessionId);
-        if(result.isSuccess()){
-            sessionId =  result.getData();
-
-        }else {
-            // Due to server error
-            throw new ServerError("Unaccepted server Error");
+        try {
+            CustomResponse<String> result =   authController.reSendOtp(sessionId);
+            if(result.isSuccess()){
+                sessionId =  result.getData();
+            }else {
+                // Due to server error
+                throw new ServerError("Unaccepted server Error");
+            }
+        }catch (UserNotFound userNotFound){
+            logger.info("User not found .Retry after some time :: ");
+            System.exit(0);
+        }catch (ServerError serverError){
+            logger.info("Server error try after sometime : ");
+            System.exit(0);
         }
+
+
 
     }
     public void login() {
@@ -180,6 +210,6 @@ public class AuthUi {
             authUi.sendOtp();
         }
 
-        authUi.verifyOtpAndLogin();
+
     }
 }

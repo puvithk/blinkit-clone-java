@@ -9,10 +9,12 @@ import auth.dto.OtpVerificationRequestDto;
 import auth.exceptions.InvalidOtp;
 import auth.exceptions.InvalidPhoneNumber;
 import auth.exceptions.OtpSessionAlreadyPresent;
+import auth.exceptions.SessionIdNotPresent;
 import auth.model.OtpSession;
 import common.exception.ServerError;
 import common.response.CustomResponse;
 
+import common.security.SecurityContext;
 import user.exceptions.UserNotFound;
 import user.model.User;
 import user.service.UserService;
@@ -61,7 +63,9 @@ public class AuthService {
                 otpSession.setOpt(createOtp());
                 excecutionCount++;
             }
+
         }
+        System.out.println(otpSession.getOpt());
 
         return new CustomResponse<>(true , "Sent Otp successfully" , otpSession.getSessionId());
     }
@@ -90,16 +94,14 @@ public class AuthService {
         String currentSessionId = requestDto.getSessionId();
         // Get the otp session based on the session id
         OtpSession currentOtpSession = otpSessionDao.findBySessionId(currentSessionId);
-        // Check weather the opt is expired
+        // Check weather opt is expired
         boolean isOtpExpired = currentOtpSession.getExpireBy().isBefore(LocalDateTime.now());
-
 
         if (isOtpExpired) {
             throw new InvalidOtp("OTP expired", false);
         }
         // Check weather the otp matchs
-        boolean isOtpCorrect =
-                currentOtpSession.getOpt().equals(requestDto.getOpt());
+        boolean isOtpCorrect = currentOtpSession.getOpt().equals(requestDto.getOpt());
 
         if (!isOtpCorrect) {
             throw new InvalidOtp("Invalid OTP", true);
@@ -110,7 +112,7 @@ public class AuthService {
         otpSessionDao.updateOtpVerification(currentOtpSession);
         // Get the users
         User user = userService.getUserByUserId(currentOtpSession.getUserId());
-        // Updated the authresponse
+        // Updated the autoresponse DTO
         AuthResponseDto authResponseDto = new AuthResponseDto();
 
         authResponseDto.setUserId(currentOtpSession.getUserId());
@@ -130,8 +132,67 @@ public class AuthService {
     }
 
     public CustomResponse<String> reSendOtp(String sessionId) {
+        // Delete the Otp session of id session id
 
-        return  null;
+        OtpSession newSession = otpSessionDao.findBySessionId(sessionId);
+        if(newSession == null){
+            throw new SessionIdNotPresent("Session not present ");
+        }
 
+
+
+        otpSessionDao.deleteOtpSessionBySessionId(newSession);
+        // Get the user details
+        OtpSession otpSession = new OtpSession(newSession.getUserId());
+        // Get the user details using session
+        User user;
+        try {
+            user = userService.getUserByUserId(otpSession.getUserId());
+        }catch (UserNotFound userNotFound){
+            throw new UserNotFound("User not found ");
+        }
+        otpSession.setSessionId(createSessionId(user.getPhoneNumber()));
+        otpSession.setOpt(createOtp());
+        // Update and get new session and opt
+        // Add expire by
+        otpSession.setExpireBy(LocalDateTime.now().plusSeconds(30));
+        int excecutionCount = 0 ;
+        while(excecutionCount <= 3 ) {
+            try {
+                createOtpSession(otpSession);
+                if (excecutionCount == 3) {
+                    throw new ServerError("Server error try later ");
+                }
+            } catch (OtpSessionAlreadyPresent error) {
+                otpSession.setSessionId(createSessionId(user.getPhoneNumber()));
+                otpSession.setOpt(createOtp());
+                excecutionCount++;
+            }
+        }
+        System.out.println(otpSession.getOpt());
+        return new CustomResponse<>(true , "Sent Otp successfully" , otpSession.getSessionId());
+        // The call verify opt
+
+
+    }
+
+    public void updateUser(User user){
+        // Get the user by user id
+        User currentUser = userService.getUserByUserId(user.getId());
+        if(currentUser == null){
+            throw new UserNotFound("user not found");
+        }
+        // Update the phone number in the user
+        user.setPhoneNumber(currentUser.getPhoneNumber());
+        // Update the user in database
+        userService.updateUser(user);
+        System.out.println(userService.getAllUser().toString());
+    }
+
+
+    public void updateSecurityContext(AuthResponseDto responseDto) {
+        SecurityContext securityContext = SecurityContext.getContext();
+        securityContext.setUsername(responseDto.getUsername());
+        securityContext.setUserId(responseDto.getUserId());
     }
 }

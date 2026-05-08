@@ -38,4 +38,18 @@ public class InMemoryUserDaoImpl implements UserDao {
                 .findFirst()
                 .orElse(null);
     }
+
+    @Override
+    public void updateUser(User user , User currentUser) {
+        int index = users.indexOf(currentUser);
+        users.set(index ,  user);
+
+    }
+
+    @Override
+    public List<User> findAllUser() {
+        return users;
+    }
+
+
 }

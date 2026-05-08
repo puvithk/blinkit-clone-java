@@ -10,4 +10,6 @@ public interface OtpSessionDao {
     OtpSession findBySessionId(String currentSessionId);
 
     void updateOtpVerification(OtpSession currentOtpSession);
+
+    void deleteOtpSessionBySessionId(OtpSession otpSession);
 }

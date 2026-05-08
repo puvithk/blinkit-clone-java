@@ -5,6 +5,8 @@ import user.dao.UserDao;
 import user.exceptions.UserNotFound;
 import user.model.User;
 
+import java.util.List;
+
 public class UserService {
     // Declaring the User Dao object
     private final UserDao userDao = new InMemoryUserDaoImpl();
@@ -24,6 +26,23 @@ public class UserService {
     }
 
     public User getUserByUserId(Integer userId) {
-        return userDao.findUserByUserId(userId);
+        User user = userDao.findUserByUserId(userId);
+        if(user== null){
+            throw  new UserNotFound("User not found");
+        }
+        return user;
+    }
+
+    public void updateUser(User user) {
+        User currentUser = userDao.findUserByUserId(user.getId());
+        if(currentUser == null){
+            throw new UserNotFound("User not found");
+        }
+        userDao.updateUser(user , currentUser);
+
+    }
+
+    public List<User> getAllUser() {
+        return userDao.findAllUser();
     }
 }

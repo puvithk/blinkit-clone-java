@@ -53,4 +53,10 @@ public class InMemoryOtpSessionDao implements OtpSessionDao {
         otpSessions.set(index , currentOtpSession);
 
     }
+
+    @Override
+    public void deleteOtpSessionBySessionId(OtpSession session) {
+        otpSessions.remove(session);
+
+    }
 }

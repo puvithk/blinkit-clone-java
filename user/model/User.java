@@ -61,11 +61,26 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
+    public User(int id) {
+        this.id = id;
+    }
+
     public User(String username, String email, LocalDate dob) {
 
 
         this.username = username;
         this.email = email;
         this.dob = dob;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", dob=" + dob +
+                '}';
     }
 }
