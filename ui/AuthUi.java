@@ -12,6 +12,10 @@ import common.exception.ServerError;
 import common.exception.UserInterrupt;
 import common.response.CustomResponse;
 import common.security.SecurityContext;
+import inventory.controller.WarehouseController;
+import inventory.exception.InvalidPincode;
+import inventory.exception.WareHouseNotAvaliable;
+
 import user.exceptions.UserNotFound;
 import user.model.User;
 
@@ -26,6 +30,10 @@ public class AuthUi {
     private final Logger logger = Logger.getLogger(AuthUi.class.getName());
     // Declare a object of Scanner
     private final Scanner scanner = new Scanner(System.in);
+
+    // Object used to access the warehouse details
+    private final WarehouseController warehouseController = new WarehouseController();
+
 
     // Session Id
     // Usually  this will be stored in local host hence Didn't do a object of it
@@ -209,6 +217,50 @@ public class AuthUi {
             authUi.sendOtp();
         }
 
+
+        authUi.getLocationInfo();
+
+    }
+
+    private void getLocationInfo() {
+        // Get the pin id of the user
+        System.out.println("Enter a pin code ");
+        String pincode =  scanner.nextLine();
+        while(true){
+            try {
+                Integer warehouseId = warehouseController.getNearestWarehouse(pincode);
+                authController.updateSecurityContextWarehouse(warehouseId);
+                System.out.println(warehouseId);
+                break;
+            }catch (InvalidPincode invalidPincode){
+                logger.info("Invalid pin code :");
+                System.out.println("\n Press 1 to  Re-enter pin code : \n Press any number to Exit :");
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+                if(choice==1){
+                    System.out.println("Enter a pin code ");
+                    pincode = scanner.nextLine();
+                }else {
+                    logger.info("Exiting.....");
+                    throw new UserInterrupt("User Interrupt");
+                }
+            }catch (WareHouseNotAvaliable notAvailable){
+
+                logger.info("Delivery not available in your address");
+                System.out.println("\n Press 1 to  Re-enter Different Pin code  : \n Press any number to Exit :");
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+                if(choice==1){
+                    System.out.println("Enter a pin code ");
+                    pincode = scanner.nextLine();
+                }else {
+                    logger.info("Exiting.....");
+                    throw new UserInterrupt("User Interrupt");
+                }
+            }
+        }
+        // based on the user pin id
+        // Based on exact match
 
     }
 }

@@ -14,7 +14,7 @@ public class MainApp {
 
         //login();
         // Dashboard
-        home();
+       home();
         // Add to cart
         // Payment
         // Track progress

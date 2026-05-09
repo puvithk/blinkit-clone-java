@@ -35,4 +35,8 @@ public class AuthController {
     public void updateSecurityContext(AuthResponseDto responseDto) {
         authService.updateSecurityContext(responseDto);
     }
+
+    public void updateSecurityContextWarehouse(Integer warehouseId) {
+        authService.updateSecurityContextWarehouse(warehouseId);
+    }
 }

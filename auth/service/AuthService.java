@@ -195,4 +195,10 @@ public class AuthService {
         securityContext.setUsername(responseDto.getUsername());
         securityContext.setUserId(responseDto.getUserId());
     }
+
+    public void updateSecurityContextWarehouse(Integer warehouseId) {
+        SecurityContext context = SecurityContext.getContext();
+        context.setWarehouseId(warehouseId);
+
+    }
 }

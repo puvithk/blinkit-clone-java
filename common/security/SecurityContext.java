@@ -4,9 +4,18 @@ public class SecurityContext {
     private Integer userId ;
     private String username;
     private String role ;
+    private Integer warehouseId ;
     private static SecurityContext context = null;
     private SecurityContext(){
 
+    }
+
+    public Integer getWarehouseId() {
+        return warehouseId;
+    }
+
+    public void setWarehouseId(Integer warehouseId) {
+        this.warehouseId = warehouseId;
     }
 
     @Override
