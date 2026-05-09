@@ -190,4 +190,14 @@ public class InMemoryProductDaoImpl implements ProductDao {
                 .map(Product::getCategory)
                 .toList();
     }
+
+    @Override
+    public List<Product> findAllByCategory(int page, String category) {
+           int maxPage =  5 ;
+        return allProducts.stream()
+                .filter(product -> product.getCategory().getName().equals(category))
+                .skip((long) page * maxPage)
+                .limit(maxPage)
+                .toList();
+    }
 }

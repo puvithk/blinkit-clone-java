@@ -3,6 +3,7 @@ package product.service;
 import product.dao.ProductDao;
 import product.dao.impl.InMemoryProductDaoImpl;
 import product.dto.CategorySubResponse;
+import product.model.Product;
 import product.model.category.MainCategory;
 import product.model.category.SubCategory;
 
@@ -26,5 +27,9 @@ public class ProductService {
                         e.getKey() , e.getValue()
                 ))
                 .toList();
+    }
+
+    public List<Product> getProductByCategory(int page , String category) {
+        return productDao.findAllByCategory(page , category);
     }
 }

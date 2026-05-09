@@ -3,7 +3,6 @@ package ui;
 import product.controller.ProductController;
 import product.dto.CategorySubResponse;
 import product.model.category.SubCategory;
-import product.service.ProductService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,8 +11,19 @@ import java.util.Scanner;
 
 public class HomePageUi {
     private final ProductController productController = new ProductController();
+    // Prodcut ui based on the category
+    private final ProductUi productUi = new ProductUi();
     private final Scanner scanner = new Scanner(System.in);
     public void homePage(){
+        while(true){
+            boolean isExit = homeUi();
+            if(isExit){
+                return;
+            }
+        }
+
+    }
+    public boolean homeUi(){
         // Display the available category and subcategory
         // Get all the available category and the subcategory
         int count =  1 ;
@@ -29,11 +39,21 @@ public class HomePageUi {
             }
         }
         System.out.println("---------------------------------------------------");
+        int totalCategory = count;
         inputMapping.put(count , "HOME");
         inputMapping.put(count+1 , "ORDER_AGAIN");
         inputMapping.put(count+2 , "CATEGORIES");
         inputMapping.put(count+3 ,"EXIT");
         System.out.println("| "+count++ + "   HOME   |  "+count++ + " ORDER AGAIN    |   "+count++ + "  CATEGORIES    |   "+count++ + "  EXIT  | ");
         System.out.println("Enter any choice : ");
+        int choice = scanner.nextInt();
+        System.out.println("Choice " + inputMapping.get(choice));
+        if(choice > 0  && choice <= totalCategory ){
+            productUi.productBasedOnCategory( inputMapping.get(choice));
+        }
+        if(inputMapping.get(choice).equals("EXIT")){
+            return true;
+        }
+        return false;
     }
 }

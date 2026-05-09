@@ -20,6 +20,7 @@ public class ElectronicProduct extends Product{
         this.wattage = wattage;
     }
 
+
     public String getKeyFeatures() {
         return keyFeatures;
     }
