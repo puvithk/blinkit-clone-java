@@ -14,6 +14,13 @@ public class WareHouseInventory {
 
     private Integer quantity;
 
+    public WareHouseInventory(Integer id,  WareHouse warehouse,Product product, Integer quantity) {
+        this.id = id;
+        this.product = product;
+        this.warehouse = warehouse;
+        this.quantity = quantity;
+    }
+
     public Integer getId() {
         return id;
     }

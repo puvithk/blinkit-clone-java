@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class HomePageUi {
     private final ProductController productController = new ProductController();
-    // Prodcut ui based on the category
+    // Product ui based on the category
     private final ProductUi productUi = new ProductUi();
     private final Scanner scanner = new Scanner(System.in);
     public void homePage(){

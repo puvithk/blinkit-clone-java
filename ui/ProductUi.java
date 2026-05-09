@@ -19,6 +19,7 @@ public class ProductUi {
                     product -> System.out.println(product.getProductTitle())
             );
             System.out.println("Press 0 to load more : ");
+            break;
 
         }
         // show the products

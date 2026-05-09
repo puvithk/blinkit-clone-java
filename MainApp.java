@@ -12,7 +12,7 @@ public class MainApp {
         // Login with phone number -> OTP
 
 
-        //login();
+        login();
         // Dashboard
        home();
         // Add to cart
