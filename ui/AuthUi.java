@@ -1,4 +1,4 @@
-package auth.ui;
+package ui;
 
 
 import auth.controller.AuthController;
@@ -16,7 +16,6 @@ import user.exceptions.UserNotFound;
 import user.model.User;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
