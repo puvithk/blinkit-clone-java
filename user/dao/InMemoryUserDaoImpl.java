@@ -1,12 +1,13 @@
 package user.dao;
 
+import mockData.MockData;
 import user.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryUserDaoImpl implements UserDao {
-    private List<User> users = new ArrayList<>(List.of());
+    private final List<User> users = MockData.getObject().users;
 
 
     @Override
@@ -28,7 +29,8 @@ public class InMemoryUserDaoImpl implements UserDao {
         }
 
         user.setId(userId);
-        users.addLast(user);
+        users.add(user);
+        System.out.println(users.toString());
     }
 
     @Override

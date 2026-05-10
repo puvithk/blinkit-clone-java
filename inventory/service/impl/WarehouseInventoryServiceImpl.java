@@ -33,7 +33,7 @@ public class WarehouseInventoryServiceImpl implements WarehouseInventoryService 
         }
         return wareHouseInventories.stream()
                 .anyMatch(wareHouseInventory ->
-                        wareHouseInventory.getProduct().equals(product)
+                        wareHouseInventory.getProduct().getId().equals(product.getId())
                                 && wareHouseInventory.getQuantity() > 0
                 );
     }

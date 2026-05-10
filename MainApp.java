@@ -24,8 +24,8 @@ public class MainApp {
 
     }
     public static void login(){
-        // Direct the Login to Login UI ;
-        authUi.login(true);
+        // Direct the Login to Login UI
+        authUi.login();
     }
     public static  void home(){
         homepageUi.homePage();

@@ -9,4 +9,6 @@ public interface CartDao {
     Cart createCart(User user);
 
     void updateCart(Cart cart);
+
+    Cart findCartByUser(Integer userId);
 }

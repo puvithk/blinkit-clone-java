@@ -65,12 +65,13 @@ public class User {
         this.id = id;
     }
 
-    public User(String username, String email, LocalDate dob) {
-
+    public User(int id , String username, String email, LocalDate dob , String phoneNumber ) {
+        this.id = id;
 
         this.username = username;
         this.email = email;
         this.dob = dob;
+        this.phoneNumber = phoneNumber;
     }
 
     @Override

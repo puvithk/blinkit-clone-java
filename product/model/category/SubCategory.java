@@ -28,4 +28,21 @@ public class SubCategory {
     public void setMainCategory(MainCategory mainCategory) {
         this.mainCategory = mainCategory;
     }
+    @Override
+    public boolean equals(Object o) {
+
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass())
+            return false;
+
+        SubCategory that = (SubCategory) o;
+
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }

@@ -26,9 +26,10 @@ public class UserService {
     }
 
     public User getUserByUserId(Integer userId) {
+
         User user = userDao.findUserByUserId(userId);
         if(user== null){
-            throw  new UserNotFound("User not found");
+            throw new UserNotFound("User not found");
         }
         return user;
     }

@@ -26,25 +26,26 @@ public class HomePageUi {
     public boolean homeUi(){
         // Display the available category and subcategory
         // Get all the available category and the subcategory
-        int count =  1 ;
+        int inputCount =  1 ; // Track the Number of input options
         // This variable is used to map the Count and the category
         Map<Integer , String> inputMapping =  new HashMap<>();
         // Get the category and Sub category list
         List<CategorySubResponse> categorySubResponseList = productController.getSubCategoriesByCategory();
         for(CategorySubResponse categorySubResponse : categorySubResponseList){
+            // Print the name of the Catergory
             System.out.println(categorySubResponse.getMainCategory().getName());
             for(SubCategory subCategory : categorySubResponse.getSubCategoryList()){
-                inputMapping.put(count , subCategory.getName());
-                System.out.println(count++ +". " + subCategory.getName());
+                inputMapping.put(inputCount , subCategory.getName());
+                System.out.println(inputCount++ +". " + subCategory.getName());
             }
         }
         System.out.println("---------------------------------------------------");
-        int totalCategory = count;
-        inputMapping.put(count , "HOME");
-        inputMapping.put(count+1 , "ORDER_AGAIN");
-        inputMapping.put(count+2 , "CATEGORIES");
-        inputMapping.put(count+3 ,"EXIT");
-        System.out.println("| "+count++ + "   HOME   |  "+count++ + " ORDER AGAIN    |   "+count++ + "  CATEGORIES    |   "+count++ + "  EXIT  | ");
+        int totalCategory = inputCount;
+        inputMapping.put(inputCount , "HOME");
+        inputMapping.put(inputCount+1 , "ORDER_AGAIN");
+        inputMapping.put(inputCount+2 , "CATEGORIES");
+        inputMapping.put(inputCount+3 ,"EXIT");
+        System.out.println("| "+inputCount++ + "   HOME   |  "+inputCount++ + " ORDER AGAIN    |   "+inputCount++ + "  CATEGORIES    |   "+inputCount++ + "  EXIT  | ");
         System.out.println("Enter any choice : ");
         int choice = scanner.nextInt();
         System.out.println("Choice " + inputMapping.get(choice));

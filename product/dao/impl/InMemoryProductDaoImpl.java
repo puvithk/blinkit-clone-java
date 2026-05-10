@@ -27,6 +27,7 @@ public class InMemoryProductDaoImpl implements ProductDao {
     public List<SubCategory> findAllSubCategoryList() {
         return allProducts.stream()
                 .map(Product::getCategory)
+                .distinct()
                 .toList();
     }
 

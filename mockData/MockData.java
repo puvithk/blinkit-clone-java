@@ -8,21 +8,30 @@ import product.model.NutritionalInfo;
 import product.model.Product;
 import product.model.category.MainCategory;
 import product.model.category.SubCategory;
+import user.model.User;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MockData {
     // All products list
-    public List<Product> products = new ArrayList<>();
+    public static List<Product> products = new ArrayList<>();
 
     // All Warehouse list
-    public List<WareHouse> wareHouseList = new ArrayList<>(    List.of(
+    public  static  List<WareHouse> wareHouseList = new ArrayList<>(    List.of(
             new WareHouse(1,"Anvish Pvt" , "575022") ,
             new WareHouse(2,"Manuvith Pvt" , "575056")
     ));
+    // List of users
+    public static List<User> users = new ArrayList<>(List.of(
+            new User(1,"puvithkumar" , "puvith@gmail.com" , LocalDate.now() , "+919964012373" ),
+            new User(2,"puvithkumar" , "puvith@gmail.com" , LocalDate.now() , "+919964038153" )
+
+    ));
+
     // List of Warehouse inventory
-    public List<WareHouseInventory> wareHouseInventories = new ArrayList<>();
+    public static List<WareHouseInventory> wareHouseInventories = new ArrayList<>();
     public List<Product> productsData() {
         MainCategory foodCategory = new MainCategory();
         foodCategory.setId(1);

@@ -47,4 +47,12 @@ public class inMemoryCartDaoImpl implements CartDao {
         }
     }
 
+    @Override
+    public Cart findCartByUser(Integer userId) {
+        return carts.stream()
+                .filter(cart -> cart.getUser().getId() == userId)
+                .findFirst()
+                .orElse(null);
+    }
+
 }

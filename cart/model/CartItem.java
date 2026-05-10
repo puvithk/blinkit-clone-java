@@ -6,6 +6,14 @@ public class CartItem {
     private Product product ;
     private Integer quantity;
 
+    @Override
+    public String toString() {
+        return "CartItem{" +
+                "product=" + product.toString() +
+                ", quantity=" + quantity +
+                '}';
+    }
+
     public Product getProduct() {
         return product;
     }

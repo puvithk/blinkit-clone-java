@@ -42,4 +42,14 @@ public class Cart {
     public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
     }
+
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "id=" + id +
+                ", user=" + user +
+                ", cartItems=" + cartItems.toString() +
+                ", totalAmount=" + totalAmount +
+                '}';
+    }
 }
