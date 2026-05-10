@@ -39,4 +39,13 @@ public class InMemoryProductDaoImpl implements ProductDao {
                 .limit(maxPage)
                 .toList();
     }
+
+    @Override
+    public Product findProductById(Integer id) {
+        return allProducts.stream().filter(
+                product -> product.getId().equals(id)
+
+        ).findFirst().orElse(null);
+
+    }
 }

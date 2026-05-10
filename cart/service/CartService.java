@@ -1,0 +1,59 @@
+package cart.service;
+
+import cart.dao.CartDao;
+import cart.dao.impl.inMemoryCartDaoImpl;
+import cart.exception.ProductOutOfStockException;
+import cart.model.Cart;
+import cart.model.CartItem;
+import common.security.SecurityContext;
+import inventory.exception.WareHouseNotAvaliable;
+import inventory.service.WarehouseInventoryService;
+import inventory.service.impl.WarehouseInventoryServiceImpl;
+import product.model.Product;
+import user.model.User;
+import user.service.UserService;
+
+public class CartService {
+    private WarehouseInventoryService warehouseInventoryService = new WarehouseInventoryServiceImpl();
+    // Get the suer service top find the user
+    private UserService userService = new UserService();
+
+    // Get the cart dao
+    private final CartDao cartDao = new inMemoryCartDaoImpl();
+
+    public void addToMyCart(Product product) {
+        // Check is the product is in stock in the current warehouse
+        // Get the warehouse details
+        Integer warehouseId = SecurityContext.getContext().getWarehouseId();
+        boolean isAvailable =  warehouseInventoryService.isProductAvailable(warehouseId , product);
+        if(!isAvailable){
+                throw new ProductOutOfStockException("Product out of stock");
+        }
+
+        Integer userId = SecurityContext.getContext().getUserId();
+
+        // Get the user details
+        User user = userService.getUserByUserId(userId);
+        // Get or create the cart of the user
+        Cart cart = cartDao.getCartByUser(user);
+        // Check if cart is null
+        // If null Create a cart
+        if(cart==null){
+            cart = cartDao.createCart(user);
+        }
+        // Add the product to the already available list
+        CartItem cartItem = new CartItem();
+        cartItem.setProduct(product);
+        cartItem.setQuantity(1);
+        // Update in the list
+        cart.getCartItems().add(cartItem);
+
+        cartDao.updateCart(cart);
+
+
+
+
+
+
+    }
+}

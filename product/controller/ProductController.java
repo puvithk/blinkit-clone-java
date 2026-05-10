@@ -17,6 +17,12 @@ public class ProductController {
         // Get the product based on the category
         return productService.getProductByCategory(page , category);
     }
+
+    public Product getProductById(Integer Id) {
+        // Get product details by id
+        return productService.getProductById(Id);
+
+    }
     // Get the product category
     // Get the items from cat use paging
 

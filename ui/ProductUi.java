@@ -1,6 +1,8 @@
 package ui;
 
+import cart.controller.CartController;
 import product.controller.ProductController;
+import product.exception.ProductNotFound;
 import product.model.Product;
 
 import java.util.*;
@@ -8,6 +10,8 @@ import java.util.*;
 public class ProductUi {
 
     private final ProductController productController = new ProductController();
+    // Cart controller
+    private final CartController cartController = new CartController();
     // scanner
     private final Scanner scanner = new Scanner(System.in);
     public void productBasedOnCategory(String category){
@@ -45,6 +49,25 @@ public class ProductUi {
     }
 
     private void productBasedOnId(Integer integer) {
-        System.out.println("Product id " + integer);
+        try{
+            Product product = productController.getProductById(integer);
+            System.out.println("Product id " + product.toString());
+            System.out.println("Press 1 to add to cart , Any other to exit :");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+            if(choice == 1){
+                cartController.addToMyCart(product);
+
+
+            }else {
+                return;
+            }
+        }catch (ProductNotFound productNotFound){
+            System.out.println("Product not found : ");
+            return;
+        }
+
+
+
     }
 }

@@ -16,6 +16,16 @@ public class ElectronicProduct extends Product{
         return wattage;
     }
 
+    public String toString() {
+
+        return "ElectronicProduct{" +
+                super.toString() +
+                "serviceCenterDetails='" + serviceCenterDetails + '\n' +
+                ", wattage='" + wattage + '\n' +
+                ", keyFeatures='" + keyFeatures + '\n' +
+                '}';
+    }
+
     public void setWattage(String wattage) {
         this.wattage = wattage;
     }

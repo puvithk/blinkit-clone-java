@@ -8,6 +8,7 @@ import inventory.service.impl.WarehouseServiceImpl;
 import product.dao.ProductDao;
 import product.dao.impl.InMemoryProductDaoImpl;
 import product.dto.CategorySubResponse;
+import product.exception.ProductNotFound;
 import product.model.Product;
 import product.model.category.MainCategory;
 import product.model.category.SubCategory;
@@ -41,10 +42,18 @@ public class ProductService {
         int maxSize = 5 ;
         List<WareHouseInventory> wareHouseInventoryList = warehouseInventoryService.getAllInventoryById(warehouseId);
         return wareHouseInventoryList.stream()
+                .filter(wareHouseInventory ->wareHouseInventory.getProduct().getCategory().getName().equals(category) && wareHouseInventory.getQuantity() > 0)
                 .map(WareHouseInventory::getProduct)
-                .filter(product -> product.getCategory().getName().equals(category))
                 .skip((long) page * maxSize)
                 .limit(maxSize)
                 .toList();
+    }
+
+    public Product getProductById(Integer id) {
+        Product product =productDao.findProductById(id);
+        if(product==null){
+            throw new ProductNotFound("Product not found");
+        }
+        return product;
     }
 }

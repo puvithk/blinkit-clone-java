@@ -124,7 +124,25 @@ public abstract class Product {
     // FSSAI License ,
     // shelf life , taste profile , Disclaimer ,  Custoner care details , country of origin , manufacture name and addtress , Marketers name and address , return policy , sugar profile
 
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id + "\n" +
 
+
+                "imageUrl='" + imageUrl + "\n" +
+                "productTitle='" + productTitle + "\n" +
+                "description='" + description + "\n" +
+                "unit=" + unit +"\n"+
+                "disclaimer='" + disclaimer + "\n" +
+                "countryOfOrigin='" + countryOfOrigin + "\n" +
+                "manufacturerName='" + manufacturerName + "\n" +
+                "manufacturerAddress='" + manufacturerAddress + "\n" +
+                "marketerNameAddress='" + marketerNameAddress + "\n"+
+                "returnPolicy='" + returnPolicy + "\n" +
+                "category=" + category +
+                '}';
+    }
 
 
     // In electroince - description , service cenetrd etails , discalimer , cuontry of origin , maunufature name and address , return policy  , unit , wattages , key fratures

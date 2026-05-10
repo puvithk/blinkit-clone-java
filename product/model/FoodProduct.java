@@ -12,6 +12,17 @@ public class FoodProduct extends Product{
         return fssaiLicense;
     }
 
+    @Override
+    public String toString() {
+        return "FoodProduct{" +
+                "fssaiLicense='" + fssaiLicense + '\'' +
+                ", shelfLife=" + shelfLife +
+                ", tasteProfile='" + tasteProfile + '\'' +
+                ", sugarProfile='" + sugarProfile + '\'' +
+                ", nutritionInfo=" + nutritionInfo +
+                '}';
+    }
+
     public void setFssaiLicense(String fssaiLicense) {
         this.fssaiLicense = fssaiLicense;
     }
