@@ -221,7 +221,11 @@ public class AuthUi {
         authUi.getLocationInfo();
 
     }
+public void login(boolean isLocation){
+    AuthUi authUi = new AuthUi();
 
+    authUi.getLocationInfo();
+}
     private void getLocationInfo() {
         // Get the pin id of the user
         System.out.println("Enter a pin code ");

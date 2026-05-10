@@ -42,7 +42,7 @@ public class ProductService {
         List<WareHouseInventory> wareHouseInventoryList = warehouseInventoryService.getAllInventoryById(warehouseId);
         return wareHouseInventoryList.stream()
                 .map(WareHouseInventory::getProduct)
-                .filter(product -> product.getCategory().getMainCategory().getName().equals(category))
+                .filter(product -> product.getCategory().getName().equals(category))
                 .skip((long) page * maxSize)
                 .limit(maxSize)
                 .toList();
