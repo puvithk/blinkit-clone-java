@@ -4,11 +4,11 @@ import cart.model.Cart;
 import user.model.User;
 
 public interface CartDao {
-    Cart getCartByUser(User user);
+    Cart findCartByUser(User user);
 
     Cart createCart(User user);
 
     void updateCart(Cart cart);
 
-    Cart findCartByUser(Integer userId);
+    Cart findCartByUserId(Integer userId);
 }

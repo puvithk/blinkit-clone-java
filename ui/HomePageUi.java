@@ -13,6 +13,8 @@ public class HomePageUi {
     private final ProductController productController = new ProductController();
     // Product ui based on the category
     private final ProductUi productUi = new ProductUi();
+    // Cart ui object
+    private final CartUi cartUi = new CartUi();
     private final Scanner scanner = new Scanner(System.in);
     public void homePage(){
         while(true){
@@ -44,8 +46,10 @@ public class HomePageUi {
         inputMapping.put(inputCount , "HOME");
         inputMapping.put(inputCount+1 , "ORDER_AGAIN");
         inputMapping.put(inputCount+2 , "CATEGORIES");
-        inputMapping.put(inputCount+3 ,"EXIT");
-        System.out.println("| "+inputCount++ + "   HOME   |  "+inputCount++ + " ORDER AGAIN    |   "+inputCount++ + "  CATEGORIES    |   "+inputCount++ + "  EXIT  | ");
+        inputMapping.put(inputCount+3 , "CART");
+        inputMapping.put(inputCount+4 ,"EXIT");
+
+        System.out.println("| "+inputCount++ + "   HOME   |  "+inputCount++ + " ORDER AGAIN    |   "+inputCount++ + "  CATEGORIES    |   "+inputCount++ + " CART    |  "+  inputCount++ + "  EXIT  | ");
         System.out.println("Enter any choice : ");
         int choice = scanner.nextInt();
         System.out.println("Choice " + inputMapping.get(choice));
@@ -54,6 +58,9 @@ public class HomePageUi {
         }
         if(inputMapping.get(choice).equals("EXIT")){
             return true;
+        }
+        if(inputMapping.get(choice).equals("CART")){
+            cartUi.showCart();
         }
         return false;
     }

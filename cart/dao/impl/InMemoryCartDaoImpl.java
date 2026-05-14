@@ -2,15 +2,17 @@ package cart.dao.impl;
 
 import cart.dao.CartDao;
 import cart.model.Cart;
+import mockData.MockData;
 import user.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class inMemoryCartDaoImpl implements CartDao {
-    private List<Cart> carts = new ArrayList<>(List.of());
+public class InMemoryCartDaoImpl implements CartDao {
+    private static final List<Cart> carts = MockData.carts;
     @Override
-    public Cart getCartByUser(User user) {
+    public Cart findCartByUser(User user) {
         return carts
                 .stream()
                 .filter(cart -> cart.getUser().equals(user))
@@ -48,9 +50,10 @@ public class inMemoryCartDaoImpl implements CartDao {
     }
 
     @Override
-    public Cart findCartByUser(Integer userId) {
+    public Cart findCartByUserId(Integer userId) {
+
         return carts.stream()
-                .filter(cart -> cart.getUser().getId() == userId)
+                .filter(cart -> Objects.equals(cart.getUser().getId() , userId))
                 .findFirst()
                 .orElse(null);
     }

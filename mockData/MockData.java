@@ -1,5 +1,6 @@
 package mockData;
 
+import cart.model.Cart;
 import inventory.model.WareHouse;
 import inventory.model.WareHouseInventory;
 import product.model.ElectronicProduct;
@@ -32,6 +33,8 @@ public class MockData {
 
     // List of Warehouse inventory
     public static List<WareHouseInventory> wareHouseInventories = new ArrayList<>();
+
+  public static final List<Cart>  carts = new ArrayList<>(List.of());
     public List<Product> productsData() {
         MainCategory foodCategory = new MainCategory();
         foodCategory.setId(1);
@@ -90,6 +93,7 @@ public class MockData {
         biscuit.setMarketerNameAddress("ABC Retail, Bangalore");
         biscuit.setReturnPolicy("No Return");
         biscuit.setCategory(biscuitsCategory);
+        biscuit.setPrice(10.0);
 
         biscuit.setFssaiLicense("FSSAI123456789");
         biscuit.setShelfLife(6);
@@ -134,6 +138,7 @@ public class MockData {
         chocolate.setTasteProfile("Bitter Sweet");
         chocolate.setSugarProfile("High Sugar");
         chocolate.setNutritionInfo(chocolateNutrition);
+        chocolate.setPrice(30.0);
 
         products.add(chocolate);
 
@@ -158,7 +163,7 @@ public class MockData {
         headphone.setServiceCenterDetails("Available in all metro cities");
         headphone.setWattage("20W");
         headphone.setKeyFeatures("Bluetooth 5.3, ANC, 40hr Battery");
-
+        headphone.setPrice(120.0);
         products.add(headphone);
 
         // =========================
@@ -182,7 +187,7 @@ public class MockData {
         mixer.setServiceCenterDetails("Toll Free: 1800-123-456");
         mixer.setWattage("750W");
         mixer.setKeyFeatures("3 Jars, Copper Motor, Shock Proof");
-
+        mixer.setPrice(152.0);
         products.add(mixer);
         return products;
     }
