@@ -8,7 +8,7 @@ import cart.exception.ProductOutOfStockException;
 import cart.model.Cart;
 import cart.model.CartItem;
 import common.security.SecurityContext;
-import inventory.exception.WareHouseNotAvaliable;
+
 import inventory.service.WarehouseInventoryService;
 import inventory.service.impl.WarehouseInventoryServiceImpl;
 import product.model.Product;
@@ -28,7 +28,7 @@ public class CartService {
         // Get the warehouse details
         Integer warehouseId = SecurityContext.getContext().getWarehouseId();
         boolean isAvailable =  warehouseInventoryService.isProductAvailable(warehouseId , product);
-        System.out.println("isAvailable" + isAvailable);
+
         if(!isAvailable){
                 throw new ProductOutOfStockException("Product out of stock");
         }
@@ -55,7 +55,6 @@ public class CartService {
         cartDao.updateCart(cart);
 
 
-        System.out.println(cart.toString());
 
     }
 

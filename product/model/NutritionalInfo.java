@@ -92,4 +92,20 @@ public class NutritionalInfo {
     private Long sodium;
     private Long calories;
     private Long serveSize;
+
+
+    @Override
+    public String toString() {
+        return " NutritionalInfo \n" +
+                "| protein=" + protein +  "| \n" +
+                "| carbohydrates=" + carbohydrates +"| \n" +
+                "| totalSugar=" + totalSugar +"| \n" +
+                "| addedSugars=" + addedSugars +"| \n" +
+                "| totalFat=" + totalFat +"| \n" +
+                "| saturatedFat=" + saturatedFat +"| \n" +
+                "| dietaryFiber=" + dietaryFiber +"| \n" +
+                "| sodium=" + sodium +"| \n" +
+                "| calories=" + calories +"| \n" +
+                "| serveSize=" + serveSize +  "| \n" ;
+    }
 }

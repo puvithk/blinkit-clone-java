@@ -15,12 +15,12 @@ public class FoodProduct extends Product{
     @Override
     public String toString() {
         return "FoodProduct{" +
-                "fssaiLicense='" + fssaiLicense + '\'' +
-                ", shelfLife=" + shelfLife +
-                ", tasteProfile='" + tasteProfile + '\'' +
-                ", sugarProfile='" + sugarProfile + '\'' +
-                ", nutritionInfo=" + nutritionInfo +
-                '}';
+                super.toString() +
+                "| fssaiLicense='" + fssaiLicense + "| \n" +
+                "| shelfLife=" + shelfLife + "| \n" +
+                "| tasteProfile='" + tasteProfile + "| \n" +
+                "| sugarProfile='" + sugarProfile + "| \n" +
+                "| nutritionInfo=" + nutritionInfo + "| \n" ;
     }
 
     public void setFssaiLicense(String fssaiLicense) {

@@ -4,15 +4,12 @@ import cart.controller.CartController;
 import cart.exception.CartNotFoundException;
 import cart.model.Cart;
 import cart.model.CartItem;
-import product.model.Product;
-
-import java.util.List;
 import java.util.Scanner;
 
 public class CartUi {
     //Cart controller to get the cart details
     private final CartController cartController = new CartController();
-    // Create a scanner calss
+    // Create a scanner class
     private final Scanner scanner = new Scanner(System.in);
     public void showCart() {
         // get the full carts details and show the total amount
@@ -28,6 +25,7 @@ public class CartUi {
 
         }catch (CartNotFoundException cartNotFoundException){
             System.out.println("No items found in the cart ");
+            System.out.println("------------------------------------------------------------------------------------");
             return;
         }
         System.out.println("------------------------------------------------------------------------------------");

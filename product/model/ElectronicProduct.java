@@ -20,10 +20,9 @@ public class ElectronicProduct extends Product{
 
         return "ElectronicProduct{" +
                 super.toString() +
-                "serviceCenterDetails='" + serviceCenterDetails + '\n' +
-                ", wattage='" + wattage + '\n' +
-                ", keyFeatures='" + keyFeatures + '\n' +
-                '}';
+                "| serviceCenterDetails='" + serviceCenterDetails + "| \n" +
+                "| wattage='" + wattage + "| \n" +
+                "| keyFeatures='" + keyFeatures + "| \n" ;
     }
 
     public void setWattage(String wattage) {
