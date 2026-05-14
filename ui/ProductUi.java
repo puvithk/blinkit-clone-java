@@ -27,7 +27,9 @@ public class ProductUi {
         Map<Integer , Integer> inputMapping = new HashMap<>();
         List<Product> productList = new ArrayList<>(productController.getProductByCategory(page, category));
         while(true){
-
+            if(productList.isEmpty()){
+                System.out.println("No product found in the category");
+            }
             for (int i = 0 ;i<productList.size() ;i++) {
                 // Printing the product title
 

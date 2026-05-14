@@ -18,9 +18,9 @@ public class ProductController {
         return productService.getProductByCategory(page , category);
     }
 
-    public Product getProductById(Integer Id) {
+    public Product getProductById(Integer id) {
         // Get product details by id
-        return productService.getProductById(Id);
+        return productService.getProductById(id);
 
     }
     // Get the product category

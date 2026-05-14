@@ -15,6 +15,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+
+// This is not ideal for production environment
+
+
 public class MockData {
     // All products list
     public static List<Product> products = new ArrayList<>();
@@ -260,7 +264,7 @@ public class MockData {
     private static MockData mockData;
     private MockData(){
         products =  productsData();
-        wareHouseInventories = getWareHouseInventories(products , this.wareHouseList);
+        wareHouseInventories = getWareHouseInventories(products , wareHouseList);
     }
 
     public static MockData getObject(){
@@ -269,6 +273,46 @@ public class MockData {
         }else {
             return mockData;
         }
+    }
+
+    public static List<Product> getProducts() {
+        return products;
+    }
+
+    public static void setProducts(List<Product> products) {
+        MockData.products = products;
+    }
+
+    public static List<WareHouse> getWareHouseList() {
+        return wareHouseList;
+    }
+
+    public static void setWareHouseList(List<WareHouse> wareHouseList) {
+        MockData.wareHouseList = wareHouseList;
+    }
+
+    public static List<User> getUsers() {
+        return users;
+    }
+
+    public static void setUsers(List<User> users) {
+        MockData.users = users;
+    }
+
+    public static List<WareHouseInventory> getWareHouseInventories() {
+        return wareHouseInventories;
+    }
+
+    public static void setWareHouseInventories(List<WareHouseInventory> wareHouseInventories) {
+        MockData.wareHouseInventories = wareHouseInventories;
+    }
+
+    public static MockData getMockData() {
+        return mockData;
+    }
+
+    public static void setMockData(MockData mockData) {
+        MockData.mockData = mockData;
     }
 }
 
