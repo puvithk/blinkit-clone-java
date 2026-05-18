@@ -70,4 +70,9 @@ public class CartService {
         }
         return cart;
     }
+
+    public Cart getCartItemByUserId(Integer userId) {
+        return cartDao.findCartByUserId(userId);
+
+    }
 }

@@ -4,6 +4,8 @@ import inventory.dao.WarehouseDao;
 import inventory.dao.impl.WarehouseDaoImpl;
 import inventory.exception.InvalidPincode;
 import inventory.exception.WareHouseNotAvaliable;
+import inventory.exception.WareHouseNotFoundException;
+import inventory.model.WareHouse;
 import inventory.service.WarehouseService;
 
 public class WarehouseServiceImpl implements WarehouseService {
@@ -20,5 +22,14 @@ public class WarehouseServiceImpl implements WarehouseService {
         }
         // Check weather the warehouse is available in the given pin code
         return warehouseId;
+    }
+
+    @Override
+    public WareHouse getWarehouseById(Integer warehouseId) {
+        WareHouse wareHouse = warehouseDao.findWarehouseById(warehouseId);
+        if(wareHouse==null){
+            throw new WareHouseNotFoundException("Warehouse is not available ");
+        }
+        return wareHouse;
     }
 }

@@ -42,7 +42,8 @@ public class ProductService {
         int maxSize = 5 ;
         List<WareHouseInventory> wareHouseInventoryList = warehouseInventoryService.getAllInventoryById(warehouseId);
         return wareHouseInventoryList.stream()
-                .filter(wareHouseInventory ->wareHouseInventory.getProduct().getCategory().getName().equals(category) && wareHouseInventory.getQuantity() > 0)
+                .filter(wareHouseInventory ->wareHouseInventory.getProduct().getCategory().getName().equals(category)
+                        && wareHouseInventory.getQuantity() > 0)
                 .map(WareHouseInventory::getProduct)
                 .skip((long) page * maxSize)
                 .limit(maxSize)

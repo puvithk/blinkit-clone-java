@@ -19,4 +19,11 @@ public class WarehouseDaoImpl implements WarehouseDao {
                 .map(WareHouse::getId)
                 .findFirst().orElse(null);
     }
+
+    @Override
+    public WareHouse findWarehouseById(Integer warehouseId) {
+        return wareHouseList.stream()
+                .filter(wareHouse -> wareHouse.getId().equals(warehouseId))
+                .findFirst().orElse(null);
+    }
 }
