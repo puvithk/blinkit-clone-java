@@ -223,20 +223,26 @@ public class AuthUi {
     }
 public void login(boolean isLocation){
     AuthUi authUi = new AuthUi();
+    if(isLocation){
+        authUi.getLocationInfo();
+    }
 
-    authUi.getLocationInfo();
 }
     private void getLocationInfo() {
         // Get the pin id of the user
         System.out.println("Enter a pin code ");
+        // Get the pincode
         String pincode =  scanner.nextLine();
         while(true){
             try {
+                // Check weather the pincode is correct and the which is the nearest warehouse
                 Integer warehouseId = warehouseController.getNearestWarehouse(pincode);
+                // Update the context with the warehouseId
                 authController.updateSecurityContextWarehouse(warehouseId);
-                System.out.println(warehouseId);
                 break;
+
             }catch (InvalidPincode invalidPincode){
+                // If the pincode is invalid
                 logger.info("Invalid pin code :");
                 System.out.println("\n Press 1 to  Re-enter pin code : \n Press any number to Exit :");
                 int choice = scanner.nextInt();
@@ -249,7 +255,7 @@ public void login(boolean isLocation){
                     throw new UserInterrupt("User Interrupt");
                 }
             }catch (WareHouseNotAvaliable notAvailable){
-
+                // If the delivery is not available in address
                 logger.info("Delivery not available in your address");
                 System.out.println("\n Press 1 to  Re-enter Different Pin code  : \n Press any number to Exit :");
                 int choice = scanner.nextInt();

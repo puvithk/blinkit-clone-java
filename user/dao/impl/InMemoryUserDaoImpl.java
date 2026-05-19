@@ -7,7 +7,7 @@ import user.model.User;
 import java.util.List;
 
 public class InMemoryUserDaoImpl implements UserDao {
-    private final List<User> users = MockData.getObject().users;
+    private final List<User> users = MockData.users;
 
 
     @Override

@@ -25,15 +25,23 @@ public class CartUi {
                 System.out.printf("| %-27s | %-3d | %8.3f | %n", cartItem.getProduct().getProductTitle() , cartItem.getQuantity() , cartItem.getProduct().getPrice());
 
             }
-            System.out.printf("%n| Total Amount : %f |%n" , cartProducts.getTotalAmount());
+            if(cartProducts.getCartItems().isEmpty()){
+                System.out.println("No items found in the cart");
+            }else {
+                System.out.printf("%n| Total Amount : %f |%n" , cartProducts.getTotalAmount());
+                System.out.println("------------------------------------------------------------------------------------");
+                System.out.println("------------------------------------------------------------------------------------");
+                System.out.println("Press 1 to PLACE ORDER : ");
+            }
+
 
         }catch (CartNotFoundException cartNotFoundException){
+            // If the cart is empty
             System.out.println("No items found in the cart ");
             System.out.println("------------------------------------------------------------------------------------");
             return;
         }
-        System.out.println("------------------------------------------------------------------------------------");
-        System.out.println("Press 1 to PLACE ORDER : ");
+
         System.out.println("Press 0 to EXIT : ");
         int choice = scanner.nextInt();
         scanner.nextLine();

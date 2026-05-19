@@ -11,4 +11,6 @@ public interface CartDao {
     void updateCart(Cart cart);
 
     Cart findCartByUserId(Integer userId);
+
+    void clearCartItems(Cart cart);
 }

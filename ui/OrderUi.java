@@ -30,6 +30,7 @@ public class OrderUi {
         try {
             // get the data from the controller
             Cart cartProducts = cartController.getCartItems();
+            // Print all the cart items
             for(CartItem cartItem : cartProducts.getCartItems()){
                 System.out.printf("| %-27s | %-3d | %8.3f | %n", cartItem.getProduct().getProductTitle() , cartItem.getQuantity() , cartItem.getProduct().getPrice());
 
@@ -37,6 +38,7 @@ public class OrderUi {
             System.out.printf("%n| Total Amount : %f |%n" , cartProducts.getTotalAmount());
 
         }catch (CartNotFoundException cartNotFoundException){
+            // cart not found or empty
             System.out.println("No items found in the cart ");
             System.out.println("------------------------------------------------------------------------------------");
             return;
@@ -66,6 +68,7 @@ public class OrderUi {
         // Create a order
         CustomResponse<OrderPlacedResponse> response;
         try{
+            // get the order id
             response = orderController.placeOrderByUser();
         }catch (ProductOutOfStockException product){
             System.out.println("Product in cart is not present");
@@ -113,7 +116,7 @@ public class OrderUi {
         // Check is success and Print the object
 
         if(!response.isSuccess()){
-            System.out.println("Problem in feteching : ");
+            System.out.println("Problem in fetching : ");
             return;
         }
         List<OrderResponse> orderList = response.getData();

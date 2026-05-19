@@ -58,7 +58,8 @@ public class PaymentUi {
             }
 
         }catch (OrderNotFoundException orderNotFoundException){
-
+            System.out.println("Order is not present ");
+            return;
         }
         catch (Exception ex){
             System.out.println(ex.getMessage());

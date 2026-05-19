@@ -36,6 +36,7 @@ public class HomePageUi {
         Map<Integer , String> inputMapping =  new HashMap<>();
         // Get the category and Sub category list
         List<CategorySubResponse> categorySubResponseList = productController.getSubCategoriesByCategory();
+        // list out all the category and subcategory
         for(CategorySubResponse categorySubResponse : categorySubResponseList){
             // Print the name of the Category
             System.out.println(categorySubResponse.getMainCategory().getName());

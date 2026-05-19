@@ -75,4 +75,18 @@ public class CartService {
         return cartDao.findCartByUserId(userId);
 
     }
+
+    public void clearCart() {
+
+        Integer userId = SecurityContext.getContext().getUserId();
+
+        // Get the user details
+        User user = userService.getUserByUserId(userId);
+        // Get or create the cart of the user
+        Cart cart = cartDao.findCartByUser(user);
+        if(cart==null){
+            throw new CartNotFoundException("Cart not found");
+        }
+        cartDao.clearCartItems(cart);
+    }
 }

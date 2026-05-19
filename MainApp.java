@@ -10,8 +10,6 @@ public class MainApp {
         System.out.println("Hello");
         // Blink it flow
         // Login with phone number -> OTP
-
-
         login();
         // Dashboard
        home();

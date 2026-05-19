@@ -126,8 +126,10 @@ public class OrderService {
         if(order==null){
             throw new OrderNotFoundException("Order not found");
         }
+
         // Update the order
         orderDao.updateOrderStatus(order , orderStatus);
+
 
     }
 
@@ -153,6 +155,14 @@ public class OrderService {
                 "Fetched Orders" ,
                 orderResponses
         );
+    }
+
+    public Order findOrderById(Integer orderId) {
+        Order order = orderDao.findOrderById(orderId);
+        if(order==null){
+            throw new OrderNotFoundException("Order not found");
+        }
+        return order;
     }
 }
 

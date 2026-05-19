@@ -58,4 +58,13 @@ public class InMemoryCartDaoImpl implements CartDao {
                 .orElse(null);
     }
 
+    @Override
+    public void clearCartItems(Cart cart) {
+        int index = carts.indexOf(cart);
+        cart.setCartItems(new ArrayList<>());
+        cart.setTotalAmount(0.0);
+        carts.set(index , cart);
+
+    }
+
 }
