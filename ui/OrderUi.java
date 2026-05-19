@@ -8,7 +8,10 @@ import cart.model.CartItem;
 import common.response.CustomResponse;
 import order.controller.OrderController;
 import order.dto.OrderPlacedResponse;
+import order.dto.OrderResponse;
+import order.model.Order;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class OrderUi {
@@ -100,6 +103,32 @@ public class OrderUi {
 
         }
 
+
+
+    }
+
+    public void showOrders() {
+        // Get the data from the controller
+        CustomResponse<List<OrderResponse>> response = orderController.getAllOrderByUser();
+        // Check is success and Print the object
+
+        if(!response.isSuccess()){
+            System.out.println("Problem in feteching : ");
+            return;
+        }
+        List<OrderResponse> orderList = response.getData();
+
+        if(orderList.isEmpty()){
+            System.out.println("-----------------------------------------------\n\n No Order present \n\n-----------------------------------------------");
+            return;
+        }
+            System.out.println("Order Id | Order Status | Total amount");
+        for(OrderResponse orderResponse: orderList){
+
+            System.out.println("-----------------------------------------------");
+            System.out.printf("%-9d , %-14s , %-13f %n" , orderResponse.getOrderId() , orderResponse.getOrderStatus() , orderResponse.getTotalAmount());
+            System.out.println("-----------------------------------------------");
+        }
 
 
     }

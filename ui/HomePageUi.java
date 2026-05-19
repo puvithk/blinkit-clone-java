@@ -13,8 +13,11 @@ public class HomePageUi {
     private final ProductController productController = new ProductController();
     // Product ui based on the category
     private final ProductUi productUi = new ProductUi();
+    // Order ui object
+    private final OrderUi orderUi = new OrderUi();
     // Cart ui object
     private final CartUi cartUi = new CartUi();
+    // Scanner for input
     private final Scanner scanner = new Scanner(System.in);
     public void homePage(){
         while(true){
@@ -61,6 +64,9 @@ public class HomePageUi {
         }
         if(inputMapping.get(choice).equals("CART")){
             cartUi.showCart();
+        }
+        if(inputMapping.get(choice).equals("ORDER_AGAIN")){
+            orderUi.showOrders();
         }
         return false;
     }

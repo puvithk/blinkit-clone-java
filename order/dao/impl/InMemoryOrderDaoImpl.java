@@ -8,7 +8,7 @@ import order.model.enums.OrderStatus;
 import java.util.List;
 
 public class InMemoryOrderDaoImpl implements OrderDao {
-    private static List<Order> orderList = MockData.orderList;
+    private static final List<Order> orderList = MockData.orderList;
     @Override
     public void createOrder(Order order) {
         Integer previousId = -1;
@@ -33,5 +33,13 @@ public class InMemoryOrderDaoImpl implements OrderDao {
         int index = orderList.indexOf(order);
         order.setOrderStatus(orderStatus);
         orderList.set(index , order);
+    }
+
+    @Override
+    public List<Order> findAllOrderByUserId(Integer userId) {
+        return orderList
+                .stream()
+                .filter(order -> order.getUser().getId().equals(userId))
+                .toList();
     }
 }

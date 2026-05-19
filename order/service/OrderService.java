@@ -49,11 +49,12 @@ public class OrderService {
         boolean productAvailability = cart
                 .getCartItems()
                 .stream()
-                .allMatch(product -> warehouseInventoryService.isProductAvailable(warehouseId , product.getProduct() ));
+                .allMatch(product -> warehouseInventoryService.isProductAvailable(warehouseId ,
+                        product.getProduct() ));
         if(!productAvailability){
             throw new ProductNotFound("Product not Available");
         }
-        // Get the order from the helper fucntion
+        // Get the order from the helper function
         User user = userService.getUserByUserId(userId);
         //Get the warehouse using Id
         WareHouse wareHouse = warehouseService.getWarehouseById(warehouseId);
@@ -84,14 +85,16 @@ public class OrderService {
         List<OrderItem> orderItems = new ArrayList<>();
 
         for (CartItem cartItem : cart.getCartItems()) {
-            orderItems.add(new OrderItem(cartItem.getProduct(), cartItem.getQuantity(), cartItem.getProduct().getPrice()
+            orderItems.add(new OrderItem(cartItem.getProduct(),
+                    cartItem.getQuantity(),
+                    cartItem.getProduct().getPrice()
                     )
             );
         }
 
         order.setOrderItems(orderItems);
 
-
+        order.setTotalAmount(cart.getTotalAmount());
 
         return order;
         }
@@ -118,12 +121,38 @@ public class OrderService {
     }
 
     public void updateOrderStatus(Integer orderId, OrderStatus orderStatus) {
+        // Get the order
         Order order = orderDao.findOrderById(orderId);
         if(order==null){
             throw new OrderNotFoundException("Order not found");
         }
+        // Update the order
         orderDao.updateOrderStatus(order , orderStatus);
 
+    }
+
+    public CustomResponse<List<OrderResponse>> getAllOrderByUser() {
+        // Get the user id
+        Integer userId = SecurityContext.getContext().getUserId();
+        // Get all the Orders from the DAO
+        List<Order> orderList = orderDao.findAllOrderByUserId(userId);
+        List<OrderResponse> orderResponses = orderList.stream().map(order -> {
+                    OrderResponse response = new OrderResponse();
+                    response.setOrderId(order.getId());
+                    response.setTotalAmount(order.getTotalAmount());
+                    response.setOrderStatus(order.getOrderStatus());
+                    response.setPaymentMethod(order.getPaymentMethod());
+                    response.setDeliveryAddress(order.getDeliveryAddress());
+                    response.setEstimatedDeliveryTime(order.getEstimatedDeliveryTime());
+                    response.setOrderedAt(order.getOrderedAt());
+                    return response;
+                        }).toList();
+        // return all the list
+        return new CustomResponse<>(
+                true ,
+                "Fetched Orders" ,
+                orderResponses
+        );
     }
 }
 

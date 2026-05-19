@@ -3,7 +3,7 @@ package user.model;
 import java.time.LocalDate;
 
 public class User {
-    private int id ;
+    private Integer id ;
 
     // phone number
     private String phoneNumber;
@@ -17,11 +17,11 @@ public class User {
     // Date of birth
     private LocalDate dob;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

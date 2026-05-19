@@ -3,6 +3,8 @@ package order.dao;
 import order.model.Order;
 import order.model.enums.OrderStatus;
 
+import java.util.List;
+
 public interface OrderDao {
 
     void createOrder(Order order);
@@ -10,4 +12,6 @@ public interface OrderDao {
     Order findOrderById(Integer orderId);
 
     void updateOrderStatus(Order order, OrderStatus orderStatus);
+
+    List<Order> findAllOrderByUserId(Integer userId);
 }
