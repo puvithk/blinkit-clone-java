@@ -45,4 +45,18 @@ public class WarehouseInventoryDaoImpl  implements WarehouseInventoryDao {
 
 
     }
+
+    @Override
+    public List<Product> findProductsByCategory(Integer warehouseId, int page, String category) {
+        int maxSize = 5 ;
+        return wareHouseInventories.stream()
+                .filter(wareHouseInventory ->
+                        wareHouseInventory.getProduct().getCategory().getName().equals(category)
+                                && wareHouseInventory.getQuantity() > 0)
+                .map(WareHouseInventory::getProduct)
+                .distinct()
+                .skip((long) page * maxSize)
+                .limit(maxSize)
+                .toList();
+    }
 }

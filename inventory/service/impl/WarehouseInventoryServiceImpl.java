@@ -21,8 +21,6 @@ public class WarehouseInventoryServiceImpl implements WarehouseInventoryService 
     @Override
     public List<WareHouseInventory> getAllInventoryById(Integer warehouseId) {
         // return the list with warehouse id
-
-
         return warehouseInventoryDao.findAllInventoryByWarehouseId(warehouseId);
 
     }
@@ -59,5 +57,10 @@ public class WarehouseInventoryServiceImpl implements WarehouseInventoryService 
             );
         }
         // Update in the database using DAO
+    }
+
+    @Override
+    public List<Product> findProductsByCategory(Integer warehouseId, int page , String category) {
+        return warehouseInventoryDao.findProductsByCategory(warehouseId , page , category);
     }
 }

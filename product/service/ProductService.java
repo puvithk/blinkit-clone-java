@@ -22,13 +22,14 @@ public class ProductService {
     // Get the object of warehouse inventry service
     private final WarehouseInventoryServiceImpl  warehouseInventoryService = new WarehouseInventoryServiceImpl();
     public List<CategorySubResponse> getSubCategoriesByCategory() {
-
+        // Get the subcategories
         List<SubCategory> subCategoryList = productDao.findAllSubCategoryList();
-
+        // Collect based on the main category
         Map<MainCategory, List<SubCategory>> categorySubResponseList =
                 subCategoryList.stream()
                         .collect(Collectors.groupingBy(SubCategory::getMainCategory));
-
+        // Create a entry set to map the category and subcategory
+        // MAIN CATEGORY -> (subcategory1 , subcategory2 )
         return categorySubResponseList.entrySet()
                 .stream()
                 .map(e -> new CategorySubResponse(
@@ -38,16 +39,12 @@ public class ProductService {
     }
 
     public List<Product> getProductByCategory(int page , String category) {
+        // Get the warehouse details
         Integer warehouseId = SecurityContext.getContext().getWarehouseId();
-        int maxSize = 5 ;
-        List<WareHouseInventory> wareHouseInventoryList = warehouseInventoryService.getAllInventoryById(warehouseId);
-        return wareHouseInventoryList.stream()
-                .filter(wareHouseInventory ->wareHouseInventory.getProduct().getCategory().getName().equals(category)
-                        && wareHouseInventory.getQuantity() > 0)
-                .map(WareHouseInventory::getProduct)
-                .skip((long) page * maxSize)
-                .limit(maxSize)
-                .toList();
+
+
+        return  warehouseInventoryService.findProductsByCategory(warehouseId ,page , category);
+
     }
 
     public Product getProductById(Integer id) {

@@ -6,6 +6,7 @@ public class SecurityContext {
     private String role ;
     private Integer warehouseId ;
     private static SecurityContext context = null;
+    // Make it private so that object cannot be created
     private SecurityContext(){
 
     }

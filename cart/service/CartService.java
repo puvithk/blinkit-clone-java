@@ -72,6 +72,7 @@ public class CartService {
     }
 
     public Cart getCartItemByUserId(Integer userId) {
+        // Get the cart item by the user
         return cartDao.findCartByUserId(userId);
 
     }

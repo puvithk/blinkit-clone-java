@@ -15,7 +15,7 @@ public class WarehouseServiceImpl implements WarehouseService {
     public Integer getNearestWarehouse(String pincode) {
         // Check weather pin code is valid
         if(!pincode.matches("^\\d{6}$")) throw new InvalidPincode("Pin code Invalid");
-
+        // Check weather there is a nearest warehouse
         Integer warehouseId = warehouseDao.findWarehouseByPincode(pincode);
         if(warehouseId == null){
             throw new WareHouseNotAvaliable("Ware house not available  in pin code ");

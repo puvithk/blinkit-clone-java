@@ -12,4 +12,6 @@ public interface WarehouseInventoryService {
     boolean isProductAvailable(Integer warehouseId, Product product);
 
     void reduceProductQuantity(Order order);
+
+    List<Product> findProductsByCategory(Integer warehouseId, int page , String category);
 }

@@ -11,4 +11,6 @@ public interface WarehouseInventoryDao {
     List<WareHouseInventory> findWareHouseInventoryByWarehouseId(Integer warehouseId);
 
     void updateProductQuantity(Integer id, Product product, Integer quantity);
+
+    List<Product> findProductsByCategory(Integer warehouseId, int page, String category);
 }
