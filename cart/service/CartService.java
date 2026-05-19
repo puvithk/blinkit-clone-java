@@ -45,11 +45,34 @@ public class CartService {
             cart = cartDao.createCart(user);
         }
         // Add the product to the already available list
-        CartItem cartItem = new CartItem();
-        cartItem.setProduct(product);
-        cartItem.setQuantity(1);
-        // Update in the list
-        cart.getCartItems().add(cartItem);
+
+
+        // Check is the product is present just update the quantity
+        CartItem existingCartItem = cart.getCartItems()
+                        .stream()
+                        .filter(item -> item.getProduct().getId().equals(product.getId()))
+                        .findFirst()
+                        .orElse(null);
+
+        // if present already increase quantity
+        if(existingCartItem != null){
+
+            existingCartItem.setQuantity(
+                    existingCartItem.getQuantity() + 1
+            );
+
+        }else {
+
+            // Create new cart item
+            CartItem cartItem = new CartItem();
+
+            cartItem.setProduct(product);
+
+            cartItem.setQuantity(1);
+            // Update in the list
+            cart.getCartItems().add(cartItem);
+        }
+     //Update the amount
         cart.setTotalAmount(cart.getTotalAmount() +  product.getPrice());
 
         cartDao.updateCart(cart);
