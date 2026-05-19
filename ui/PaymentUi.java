@@ -1,6 +1,7 @@
 package ui;
 
 import common.response.CustomResponse;
+import order.exception.OrderNotFoundException;
 import order.model.enums.PaymentMethod;
 import payment.controller.PaymentController;
 import payment.dto.PaymentResponse;
@@ -43,14 +44,23 @@ public class PaymentUi {
     }
     public void processPayment(Integer orderId , PaymentMethod selectedMethod){
         try {
-            CustomResponse<PaymentResponse> response =  paymentController.processPayment(orderId , selectedMethod);
+            CustomResponse<String> response =  paymentController.processPayment(orderId , selectedMethod);
             if(response.isSuccess()){
 
                 // This method shows other method for payment
+                System.out.println("Transaction Id : " + response.getData() );
                 // In this just simulate the payment and confirm the order
+                CustomResponse<PaymentResponse> paymentResponse = paymentController.verifyPayment(response.getData());
+                if(paymentResponse.isSuccess()){
+                    System.out.println("Order confirm");
+                    return;
+                }
             }
 
-        }catch (Exception ex){
+        }catch (OrderNotFoundException orderNotFoundException){
+
+        }
+        catch (Exception ex){
             System.out.println(ex.getMessage());
         }
     }

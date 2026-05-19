@@ -2,6 +2,7 @@ package order.controller;
 
 import common.response.CustomResponse;
 import order.dto.OrderPlacedResponse;
+import order.dto.OrderResponse;
 import order.service.OrderService;
 
 public class OrderController {
@@ -10,5 +11,9 @@ public class OrderController {
     // Controller to place a orders
     public CustomResponse<OrderPlacedResponse> placeOrderByUser(){
         return orderService.placeOrderByUser();
+    }
+
+    public CustomResponse<OrderResponse> getOrderById(Integer orderId) {
+        return orderService.getOrderById(orderId);
     }
 }

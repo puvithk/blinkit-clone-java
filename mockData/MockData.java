@@ -4,6 +4,7 @@ import cart.model.Cart;
 import inventory.model.WareHouse;
 import inventory.model.WareHouseInventory;
 import order.model.Order;
+import payment.model.Payment;
 import product.model.ElectronicProduct;
 import product.model.FoodProduct;
 import product.model.NutritionalInfo;
@@ -26,6 +27,9 @@ public class MockData {
     // Order list
     public static List<Order> orderList = new ArrayList<>();
 
+
+    // Payment list
+    public static List<Payment> paymentList = new ArrayList<>();
     // All Warehouse list
     public  static  List<WareHouse> wareHouseList = new ArrayList<>(    List.of(
             new WareHouse(1,"Anvish Pvt" , "575022") ,

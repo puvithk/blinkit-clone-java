@@ -13,6 +13,8 @@ import inventory.service.impl.WarehouseServiceImpl;
 import order.dao.OrderDao;
 import order.dao.impl.InMemoryOrderDaoImpl;
 import order.dto.OrderPlacedResponse;
+import order.dto.OrderResponse;
+import order.exception.OrderNotFoundException;
 import order.model.Order;
 import order.model.OrderItem;
 import order.model.enums.OrderStatus;
@@ -95,5 +97,33 @@ public class OrderService {
         }
 
 
+    public CustomResponse<OrderResponse> getOrderById(Integer orderId) {
+        Order order = orderDao.findOrderById(orderId);
+        if(order==null){
+            throw new OrderNotFoundException("Order not found");
+        }
+        OrderResponse orderResponse = new OrderResponse();
+        orderResponse.setOrderId(order.getId());
+        orderResponse.setTotalAmount(order.getTotalAmount());
+        orderResponse.setOrderStatus(order.getOrderStatus());
+        orderResponse.setPaymentMethod(order.getPaymentMethod());
+        orderResponse.setDeliveryAddress(order.getDeliveryAddress());
+        orderResponse.setEstimatedDeliveryTime(order.getEstimatedDeliveryTime());
+        orderResponse.setOrderedAt(order.getOrderedAt());
+        return new CustomResponse<>(
+                true ,
+                "Order present" ,
+                orderResponse
+        );
     }
+
+    public void updateOrderStatus(Integer orderId, OrderStatus orderStatus) {
+        Order order = orderDao.findOrderById(orderId);
+        if(order==null){
+            throw new OrderNotFoundException("Order not found");
+        }
+        orderDao.updateOrderStatus(order , orderStatus);
+
+    }
+}
 
