@@ -57,5 +57,19 @@ public class OrderPlacedResponse {
         this.deliveryAddress = deliveryAddress;
     }
 
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
 
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public PaymentMethod getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(PaymentMethod paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
 }

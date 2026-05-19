@@ -1,6 +1,6 @@
 package user.service;
 
-import user.dao.InMemoryUserDaoImpl;
+import user.dao.impl.InMemoryUserDaoImpl;
 import user.dao.UserDao;
 import user.exceptions.UserNotFound;
 import user.model.User;

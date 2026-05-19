@@ -49,7 +49,7 @@ public class HomePageUi {
         inputMapping.put(inputCount+3 , "CART");
         inputMapping.put(inputCount+4 ,"EXIT");
 
-        System.out.println("| "+inputCount++ + "   HOME   |  "+inputCount++ + " ORDER AGAIN    |   "+inputCount++ + "  CATEGORIES    |   "+inputCount++ + " CART    |  "+  inputCount++ + "  EXIT  | ");
+        System.out.println("| "+ inputCount++ + "   HOME   |  "+ inputCount++ + " ORDER AGAIN    |   "+inputCount++ + "  CATEGORIES    |   "+inputCount++ + " CART    |  "+  inputCount++ + "  EXIT  | ");
         System.out.println("Enter any choice : ");
         int choice = scanner.nextInt();
         System.out.println("Choice " + inputMapping.get(choice));

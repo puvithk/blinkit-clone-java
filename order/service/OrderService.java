@@ -16,10 +16,7 @@ import order.dto.OrderPlacedResponse;
 import order.model.Order;
 import order.model.OrderItem;
 import order.model.enums.OrderStatus;
-import order.model.enums.PaymentMethod;
 import product.exception.ProductNotFound;
-import product.model.Product;
-import product.service.ProductService;
 import user.model.User;
 import user.service.UserService;
 
@@ -31,8 +28,7 @@ public class OrderService {
     private final UserService userService = new UserService();
     // Get the Cart service
     private final CartService cartService = new CartService();
-    // Get the product services
-    private final ProductService productService = new ProductService();
+
     // Get the warehouse service
     private final WarehouseInventoryService warehouseInventoryService = new WarehouseInventoryServiceImpl();
 
@@ -57,17 +53,19 @@ public class OrderService {
         }
         // Get the order from the helper fucntion
         User user = userService.getUserByUserId(userId);
+        //Get the warehouse using Id
         WareHouse wareHouse = warehouseService.getWarehouseById(warehouseId);
+        // Create a order object
         Order order = createOrderHelper(user , wareHouse , cart);
         // Create a order
-        OrderDao.createOrder(order);
+        orderDao.createOrder(order);
         // return the OrderPlaced object
         return new CustomResponse<>(true ,
                 "Order created successfully" ,
                 new OrderPlacedResponse(order.getId() ,
                         cart.getTotalAmount() ,
                         14 // random times
-                        , "random" // random addres
+                        , "random" // random adders
                         , OrderStatus.PENDING_PAYMENT ,
                         null));
     }
@@ -98,4 +96,4 @@ public class OrderService {
 
 
     }
-}
+

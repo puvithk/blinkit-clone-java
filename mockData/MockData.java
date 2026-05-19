@@ -3,6 +3,7 @@ package mockData;
 import cart.model.Cart;
 import inventory.model.WareHouse;
 import inventory.model.WareHouseInventory;
+import order.model.Order;
 import product.model.ElectronicProduct;
 import product.model.FoodProduct;
 import product.model.NutritionalInfo;
@@ -22,6 +23,8 @@ import java.util.List;
 public class MockData {
     // All products list
     public static List<Product> products = new ArrayList<>();
+    // Order list
+    public static List<Order> orderList = new ArrayList<>();
 
     // All Warehouse list
     public  static  List<WareHouse> wareHouseList = new ArrayList<>(    List.of(

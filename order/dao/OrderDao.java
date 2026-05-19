@@ -4,6 +4,5 @@ import order.model.Order;
 
 public interface OrderDao {
 
-    static void createOrder(Order order) {
-    }
+    void createOrder(Order order);
 }

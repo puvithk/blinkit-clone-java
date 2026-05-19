@@ -1,9 +1,9 @@
-package user.dao;
+package user.dao.impl;
 
 import mockData.MockData;
+import user.dao.UserDao;
 import user.model.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryUserDaoImpl implements UserDao {

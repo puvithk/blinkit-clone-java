@@ -9,6 +9,10 @@ import java.util.Scanner;
 public class CartUi {
     //Cart controller to get the cart details
     private final CartController cartController = new CartController();
+    // Get the Order Ui
+    private final OrderUi orderUi =  new OrderUi();
+
+
     // Create a scanner class
     private final Scanner scanner = new Scanner(System.in);
     public void showCart() {
@@ -35,6 +39,7 @@ public class CartUi {
         scanner.nextLine();
         if(choice==1){
             System.out.println("Order placed : ");
+            orderUi.placeOrderUi();
 
         }
         else{
