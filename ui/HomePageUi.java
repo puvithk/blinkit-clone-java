@@ -40,6 +40,7 @@ public class HomePageUi {
         for(CategorySubResponse categorySubResponse : categorySubResponseList){
             // Print the name of the Category
             System.out.println(categorySubResponse.getMainCategory().getName());
+            // Print all the subcategorys
             for(SubCategory subCategory : categorySubResponse.getSubCategoryList()){
                 inputMapping.put(inputCount , subCategory.getName());
                 System.out.println(inputCount++ +". " + subCategory.getName());
@@ -56,8 +57,9 @@ public class HomePageUi {
         System.out.println("| "+ inputCount++ + "   HOME   |  "+ inputCount++ + " ORDER AGAIN    |   "+inputCount++ + "  CATEGORIES    |   "+inputCount++ + " CART    |  "+  inputCount++ + "  EXIT  | ");
         System.out.println("Enter any choice : ");
         int choice = scanner.nextInt();
-        System.out.println("Choice " + inputMapping.get(choice));
+
         if(choice > 0  && choice <= totalCategory ){
+            // Product based on the category
             productUi.productBasedOnCategory( inputMapping.get(choice));
         }
         if(inputMapping.get(choice).equals("EXIT")){

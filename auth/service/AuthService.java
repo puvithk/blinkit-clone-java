@@ -48,8 +48,11 @@ public class AuthService {
         }
         // Response object
         OtpSession otpSession = new OtpSession(user.getId());
+        // Create a session id
         otpSession.setSessionId(createSessionId(user.getPhoneNumber()));
+        // Create a opt
         otpSession.setOpt(createOtp());
+        // 30 sec time
         otpSession.setExpireBy(LocalDateTime.now().plusSeconds(30));
         int excecutionCount = 0 ;
         while(excecutionCount <= 3 ) {

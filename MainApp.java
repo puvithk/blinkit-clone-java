@@ -7,12 +7,11 @@ public class MainApp {
     public static final AuthUi authUi = new AuthUi();
     private static  final HomePageUi homepageUi = new HomePageUi();
     public static void main(String[] args){
-        System.out.println("Hello");
         // Blink it flow
         // Login with phone number -> OTP
         login();
         // Dashboard
-       home();
+        home();
         // Add to cart
         // Payment
         // Track progress

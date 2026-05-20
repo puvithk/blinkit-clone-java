@@ -25,11 +25,14 @@ public class ProductUi {
         int page = 0 ;
         // Input mapping for the product
         Map<Integer , Integer> inputMapping = new HashMap<>();
+        // Get the product list
         List<Product> productList = new ArrayList<>(productController.getProductByCategory(page, category));
         while(true){
+            // If the product is not found
             if(productList.isEmpty()){
                 System.out.println("No product found in the category");
             }
+            // Print the product
             for (int i = 0 ;i<productList.size() ;i++) {
                 // Printing the product title
 
@@ -38,9 +41,7 @@ public class ProductUi {
                 // Mapping to the input index and the operation
                 inputMapping.put(i+1 , productList.get(i).getId());
             }
-            System.out.println(
-                    "Press 0 to load more products, enter a product number to view details, or press any other key to exit."
-            );
+            System.out.println("Press 0 to load more products, enter a product number to view details, or press any other key to exit.");
             int choice = scanner.nextInt();
             scanner.nextLine();
             // Checking to reload
@@ -95,8 +96,10 @@ public class ProductUi {
             logger.info("Added Item to cart");
 
         } catch (ProductOutOfStockException outOfStockException) {
+            // Product not in stock
             System.out.println("Selected product is out of stock ");
         } catch (WareHouseNotAvaliable wareHouseNotAvaliable) {
+            // Prouduct not in the warehouse
             System.out.println("Currently not available in your location ");
         }
     }
