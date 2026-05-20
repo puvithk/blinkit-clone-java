@@ -20,6 +20,7 @@ import user.exceptions.UserNotFound;
 import user.model.User;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
@@ -120,7 +121,7 @@ public class AuthUi {
                    }
                     // If success update the security context with the user data
                    updateSecurityContext(responseDto);
-                    System.out.println(SecurityContext.getContext().toString());
+
                    break;
                 }catch (ServerError serverError){
                     // Logger the error info
@@ -174,10 +175,34 @@ public class AuthUi {
         logger.info("Update the User prefile :");
         logger.info("Enter your name :");
         user.setUsername(scanner.nextLine());
-        logger.info("Enter your email :");
-        user.setEmail(scanner.nextLine());
-        logger.info("Enter the Dob");
-        user.setDob(LocalDate.parse(scanner.nextLine()));
+        while(true){
+            logger.info("Enter your email :");
+            String email = scanner.nextLine();
+            if(Validation.validateEmail(email)){
+                user.setEmail(email);
+                break;
+            }else {
+                logger.info("Enter an valid email Id ");
+            }
+        }
+        while(true){
+            logger.info("Enter the Dob (YYYY-MM-DD)");
+            try {
+                LocalDate dob = LocalDate.parse(scanner.nextLine());
+                // Dob - date of birth
+                if(Validation.validateDob(dob)){
+                    user.setDob(dob);
+                    break;
+                }else {
+                    logger.info("Enter valid date of birth");
+                }
+            }catch (DateTimeParseException dateTimeParseException){
+                logger.info("Enter an valid date in format(YYYY-MM-DD)");
+            }
+
+
+        }
+
 
         // Update the database
         authController.updateUser(user);

@@ -186,7 +186,7 @@ public class AuthService {
         user.setPhoneNumber(currentUser.getPhoneNumber());
         // Update the user in database
         userService.updateUser(user);
-        System.out.println(userService.getAllUser().toString());
+
     }
 
 
