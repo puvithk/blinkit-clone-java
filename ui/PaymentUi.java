@@ -50,7 +50,7 @@ public class PaymentUi {
                 // This method shows other method for payment
                 System.out.println("Transaction Id : " + response.getData() );
                 // In this just simulate the payment and confirm the order
-                CustomResponse<PaymentResponse> paymentResponse = paymentController.verifyPayment(response.getData());
+                CustomResponse<PaymentResponse> paymentResponse = paymentController.verifyPayment(response.getData() , selectedMethod);
                 if(paymentResponse.isSuccess()){
                     System.out.println("Order confirm");
                     return;

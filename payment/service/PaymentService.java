@@ -14,6 +14,7 @@ import order.model.enums.PaymentMethod;
 import order.service.OrderService;
 import payment.dao.PaymentDao;
 import payment.dao.impl.InMemoryPaymentDaoImpl;
+import payment.dto.PaymentBaseRequest;
 import payment.dto.PaymentResponse;
 import payment.model.Payment;
 import payment.model.enums.PaymentStatus;
@@ -21,9 +22,8 @@ import payment.model.enums.PaymentStatus;
 import java.util.Random;
 import java.util.UUID;
 
-public class PaymentService {
-    // random number generator
-    private final Random random = new Random();
+public abstract class PaymentService {
+
     // Get the Payment dao
     private final PaymentDao paymentDao= new InMemoryPaymentDaoImpl();
     // Get the Order controller
@@ -32,6 +32,8 @@ public class PaymentService {
     private final CartService cartService = new CartService();
     // Get the warehouse inventory
     private final WarehouseInventoryService warehouseInventoryService = new WarehouseInventoryServiceImpl();
+
+    public abstract CustomResponse<String> payment(PaymentBaseRequest paymentBaseRequest);
     public CustomResponse<String> processPayment(Integer orderId, PaymentMethod selectedMethod) {
         //Check if order id is correct
         OrderResponse orderResponse = orderService.getOrderById(orderId).getData();
